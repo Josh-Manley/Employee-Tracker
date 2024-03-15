@@ -25,7 +25,19 @@ const destinationSelect = {
 inquirer.prompt(destinationSelect).then((answer) => {
   if (answer.destinationSelect === 'View All Departments') {
     db.query('SELECT * FROM department', function (err, results) {
-      console.log(results);
-    })
+      if (err) {
+        console.log(err);
+      } else {
+        console.table(results);
+      }
+    });
+  } else if (answer.destinationSelect === 'View All Roles') {
+    db.query('SELECT * FROM role', function (err, results) {
+      if (err) {
+        console.log(err);
+      } else {
+        console.table(results);
+      }
+    });
   }
-})
+});
