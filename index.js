@@ -32,7 +32,7 @@ inquirer.prompt(destinationSelect).then((answer) => {
       }
     });
   } else if (answer.destinationSelect === 'View All Roles') {
-    db.query('SELECT * FROM role', function (err, results) {
+    db.query('SELECT role.id, role.title, role.salary, department.name AS department FROM role JOIN department ON role.department_id = department.id', function (err, results) {
       if (err) {
         console.log(err);
       } else {
