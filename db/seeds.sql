@@ -8,7 +8,7 @@ INSERT INTO role (title, salary, department_id)
 VALUES ("Sales Lead", 100000, 4),
        ("Sales Person", 80000, 4),
        ("Lead Engineer", 150000, 1),
-       ("Software Engineer", 120000, 2),
+       ("Software Engineer", 120000, 1),
        ("Account Manager", 100000, 2),
        ("Accountant", 125000, 2),
        ("Legal Team Lead", 250000, 3),
