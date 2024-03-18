@@ -65,6 +65,17 @@ const addEmployeeQuestion = [{
   name: 'employeeManager'
 }]
 
+const updateEmployeeQuestion = [{
+  type: 'list',
+  message: 'Which employees role do you want to update?',
+  name: 'employeeSelectUpdate'
+},
+{
+  type: 'list',
+  message: 'Which role do you want to assign the selected employee',
+  name: 'roleSelectUpdate'
+}]
+
 selectDestination();
 
 function selectDestination() {
@@ -112,6 +123,8 @@ function selectDestination() {
         addRole();
       } else if (answer.destinationSelect === 'Add an Employee') {
         addEmployee();
+      } else if (answer.destinationSelect === 'Update an Employee Role') {
+        updateEmployeeRole();
       }
   });
 }
@@ -272,6 +285,98 @@ function addEmployee() {
                             }
                        })
                       }
+                    });
+                  }
+                });
+              }
+            });
+          });
+        }
+      });
+    }
+  });
+}
+
+function updateEmployeeRole() {
+  db.query(`SELECT e.id, 
+    e.first_name, 
+    e.last_name, 
+    r.title, 
+    d.name AS department, 
+    r.salary, 
+    CONCAT(m.first_name, ' ', m.last_name) AS manager
+    FROM employee AS e
+    JOIN role AS r ON e.role_id = r.id
+    JOIN department AS d ON r.department_id = d.id
+    LEFT JOIN employee AS m ON e.manager_id = m.id`, function (err, results) {
+      
+    if (err) {
+      console.log(err);
+    } else {
+      const employees = results.map(employee => `${employee.first_name} ${employee.last_name}`);
+      updateEmployeeQuestion[0].choices = employees;
+      
+      db.query(`SELECT role.id, role.title, role.salary, department.name AS department
+          FROM role
+          JOIN department ON role.department_id = department.id`, function (err, results) {
+            
+        if (err) {
+          console.log(err);
+        } else {
+          const roles = results.map(role => role.title);
+          updateEmployeeQuestion[1].choices = roles;
+
+          inquirer.prompt(updateEmployeeQuestion).then((answer) => {
+            db.query(`SELECT e.id, 
+            e.first_name, 
+            e.last_name, 
+            r.title, 
+            d.name AS department, 
+            r.salary, 
+            CONCAT(m.first_name, ' ', m.last_name) AS manager
+            FROM employee AS e
+            JOIN role AS r ON e.role_id = r.id
+            JOIN department AS d ON r.department_id = d.id
+            LEFT JOIN employee AS m ON e.manager_id = m.id`, function (err, results) {
+              if(err) {
+                console.log(err);
+              } else {
+                const selectedEmployee = results.find(employee => `${employee.first_name} ${employee.last_name}` === answer.employeeSelectUpdate);
+                const employeeId = selectedEmployee.id;
+
+                db.query(`SELECT role.id, role.title, role.salary, department.name AS department
+                FROM role
+                JOIN department ON role.department_id = department.id`, function (err, results) {
+                  if (err) {
+                    console.log(err);
+                  } else {
+                    const selectedRole = results.find(role => role.title === answer.roleSelectUpdate);
+                    const roleId = selectedRole.id;
+
+                db.query(`UPDATE employee
+                SET role_id = '${roleId}'
+                WHERE id = ${employeeId}`, function (err, results) {
+                  if (err) {
+                    console.log(err);
+                  } else {
+                    db.query(`SELECT e.id, 
+                      e.first_name, 
+                      e.last_name, 
+                      r.title, 
+                      d.name AS department, 
+                      r.salary, 
+                      CONCAT(m.first_name, ' ', m.last_name) AS manager
+                      FROM employee AS e
+                      JOIN role AS r ON e.role_id = r.id
+                      JOIN department AS d ON r.department_id = d.id
+                      LEFT JOIN employee AS m ON e.manager_id = m.id`, function (err, result) {
+                        if (err) {
+                          console.log(err);
+                        } else {
+                          console.table(result);
+                        }
+                      });
+                     }
                     });
                   }
                 });
