@@ -129,7 +129,6 @@ function selectDestination() {
   });
 }
 
-
 function addDepartment() {
   inquirer.prompt(addDepartmentQuestion).then((answer) => {
     db.query(`INSERT INTO department (name)
