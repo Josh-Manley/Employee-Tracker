@@ -433,6 +433,7 @@ function updateEmployeeRole() {
                                         console.log(err);
                                       } else {
                                         console.table(result);
+                                        selectDestination();
                                       }
                                     }
                                   );
