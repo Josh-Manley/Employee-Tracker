@@ -13,7 +13,7 @@ const db = mysql.createConnection(
   },
   console.log(`Connected to the classlist_db database.`)
 );
-
+// Select what to do
 const destinationSelect = {
   type: 'list',
   message: 'What would you like to do?',
@@ -28,13 +28,13 @@ const destinationSelect = {
   ],
   name: 'destinationSelect',
 };
-
+// Question for adding department
 const addDepartmentQuestion = {
   type: 'input',
   message: 'What is the name of the new department?',
   name: 'departmentName',
 };
-
+// Questions for adding a role
 const addRoleQuestion = [
   {
     type: 'input',
@@ -52,7 +52,7 @@ const addRoleQuestion = [
     name: 'departmentListQuestion',
   },
 ];
-
+// Questions for adding an employee
 const addEmployeeQuestion = [
   {
     type: 'input',
@@ -75,7 +75,7 @@ const addEmployeeQuestion = [
     name: 'employeeManager',
   },
 ];
-
+// Questions for updating an employee
 const updateEmployeeQuestion = [
   {
     type: 'list',
@@ -90,7 +90,7 @@ const updateEmployeeQuestion = [
 ];
 
 selectDestination();
-
+// function to get back to destination select 
 function selectDestination() {
   inquirer.prompt(destinationSelect).then(answer => {
     if (answer.destinationSelect === 'View All Departments') {
