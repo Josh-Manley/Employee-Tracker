@@ -20,9 +20,6 @@
   <a id="usage"></a>
   ## Usage
   open the command in your js file and type "node index.js"
-  <a id="license"></a>
-  ## License
-  Check license file for license info
   <a id="contributing"></a>
   ## Contributing
   some useful info from chatGPT
