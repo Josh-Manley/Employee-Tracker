@@ -4,12 +4,14 @@
   # Employee-Tracker
   <a id="description"></a>
   ## Description
-  Shows a database of Departments, Roles, and employees with info on the Roles and Employees 
+  Shows a database of Departments, Roles, and employees with info on the Roles and Employees
+  ## Video Link
+  https://screenrec.com/share/w51M3tDWHA
+  
   ## Table of Contents
   * [Description](#description)
   * [Installation](#installation)
   * [Usage](#usage)
-  * [License](#license)
   * [Contributing](#contributing)
   * [Tests](#tests)
   * [Questions](#questions)
